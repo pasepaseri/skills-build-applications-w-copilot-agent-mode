@@ -8,6 +8,10 @@ import { User } from './models/User.js';
 import { Workout } from './models/Workout.js';
 const app = express();
 const port = Number(process.env.PORT) || 8000;
+const codespaceName = process.env.CODESPACE_NAME?.trim();
+const apiBaseUrl = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : 'http://localhost:8000';
 app.use(express.json());
 const collections = { Activity, Leaderboard, Team, User, Workout };
 app.get('/api', (_request, response) => {
@@ -44,6 +48,7 @@ app.use((_request, response) => {
 if (process.env.NODE_ENV !== 'test') {
     app.listen(port, () => {
         console.log(`OctoFit Tracker API listening on port ${port}`);
+        console.log(`API base URL: ${apiBaseUrl}`);
     });
 }
 export default app;
