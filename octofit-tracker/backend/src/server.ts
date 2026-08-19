@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import './config/database.js';
 import { Activity } from './models/Activity.js';
 import { Leaderboard } from './models/Leaderboard.js';
 import { Team } from './models/Team.js';
