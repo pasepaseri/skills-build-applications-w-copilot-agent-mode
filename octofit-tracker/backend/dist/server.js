@@ -13,6 +13,22 @@ const apiBaseUrl = codespaceName
     ? `https://${codespaceName}-8000.app.github.dev`
     : 'http://localhost:8000';
 app.use(express.json());
+app.use((request, response, next) => {
+    const origin = request.headers.origin;
+    const allowedOrigin = origin && (/^https:\/\/[-a-z0-9]+-5173\.app\.github\.dev$/i.test(origin)
+        || origin === 'http://localhost:5173') ? origin : undefined;
+    if (allowedOrigin) {
+        response.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+        response.setHeader('Vary', 'Origin');
+    }
+    response.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+    response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    if (request.method === 'OPTIONS') {
+        response.sendStatus(204);
+        return;
+    }
+    next();
+});
 const collections = { Activity, Leaderboard, Team, User, Workout };
 app.get('/api', (_request, response) => {
     response.json({
