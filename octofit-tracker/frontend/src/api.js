@@ -13,7 +13,8 @@ export function responseItems(payload) {
 }
 
 export async function getCollection(endpoint) {
-  const response = await fetch(`${apiBaseUrl}${endpoint}`)
+  const requestUrl = endpoint.startsWith('http') ? endpoint : `${apiBaseUrl}${endpoint}`
+  const response = await fetch(requestUrl)
   if (!response.ok) throw new Error(`Unable to load ${endpoint}`)
   return responseItems(await response.json())
 }

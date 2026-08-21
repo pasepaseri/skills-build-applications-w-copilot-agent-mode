@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import CollectionState from './CollectionState.jsx'
 import { getCollection } from '../api.js'
 
-const endpoint = '/api/activities/'
+const endpoint = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities/`
+  : '/api/activities/'
 
 export default function Activities() {
   const [activities, setActivities] = useState([])

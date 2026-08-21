@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import CollectionState from './CollectionState.jsx'
 import { getCollection } from '../api.js'
 
-const endpoint = '/api/teams/'
+const endpoint = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams/`
+  : '/api/teams/'
 
 export default function Teams() {
   const [teams, setTeams] = useState([])
