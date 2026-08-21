@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react'
 import CollectionState from './CollectionState.jsx'
 import { getCollection } from '../api.js'
 
+const endpoint = '/api/activities/'
+
 export default function Activities() {
   const [activities, setActivities] = useState([])
   const [state, setState] = useState({ loading: true, error: '' })
 
   useEffect(() => {
-    getCollection('activities').then((data) => {
+    getCollection(endpoint).then((data) => {
       setActivities(data)
       setState({ loading: false, error: '' })
     }).catch((error) => setState({ loading: false, error: error.message }))

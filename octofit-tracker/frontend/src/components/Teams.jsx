@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import CollectionState from './CollectionState.jsx'
 import { getCollection } from '../api.js'
 
+const endpoint = '/api/teams/'
+
 export default function Teams() {
   const [teams, setTeams] = useState([])
   const [state, setState] = useState({ loading: true, error: '' })
-  useEffect(() => { getCollection('teams').then((data) => { setTeams(data); setState({ loading: false, error: '' }) }).catch((error) => setState({ loading: false, error: error.message })) }, [])
+  useEffect(() => { getCollection(endpoint).then((data) => { setTeams(data); setState({ loading: false, error: '' }) }).catch((error) => setState({ loading: false, error: error.message })) }, [])
   return <CollectionPage title="Teams" subtitle="The groups making progress together." state={state} empty={!teams.length}><div className="card-grid">{teams.map((team) => <article className="data-card" key={team._id}><span className="team-swatch" style={{ backgroundColor: team.color }} /><h3>{team.name}</h3><p>{Array.isArray(team.members) ? `${team.members.length} members` : 'Team'}</p></article>)}</div></CollectionPage>
 }
 

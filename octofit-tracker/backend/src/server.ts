@@ -63,7 +63,7 @@ app.get('/api/activities', async (_request, response) => {
   response.json(await Activity.find().populate('user').sort({ recordedAt: -1 }));
 });
 
-app.get('/api/leaderboard', async (_request, response) => {
+app.get('/api/leaderboard/', async (_request, response) => {
   response.json(await Leaderboard.find().populate('user team').sort({ rank: 1 }));
 });
 
